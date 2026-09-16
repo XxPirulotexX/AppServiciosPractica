@@ -1,0 +1,229 @@
+================================================================================
+EXPORTACIÓN DE PROYECTO REACT
+================================================================================
+
+ESTRUCTURA DE CARPETAS
+--------------------------------------------------------------------------------
+📁 proyecto/
+├── 📄 AGENTS.md
+├── 📄 App.js
+├── 📄 CLAUDE.md
+├── 📄 app.json
+├── 📄 index.js
+├── 📄 package.json
+├── 📄 proyecto_react.txt
+├── 📁 assets
+├── 📁 screens
+│   ├── 📄 DetailScreen.js
+│   ├── 📄 HomeScreen.js
+
+
+================================================================================
+CONTENIDO DE ARCHIVOS
+================================================================================
+
+
+================================================================================
+📄 ARCHIVO: AGENTS.md
+================================================================================
+# Expo HAS CHANGED
+
+Read the exact versioned docs at https://docs.expo.dev/versions/v57.0.0/ before writing any code.
+
+
+================================================================================
+📄 ARCHIVO: App.js
+================================================================================
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './screens/HomeScreen';
+import DetailScreen from './screens/DetailScreen.js';
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Servicios" component={HomeScreen} />
+        <Stack.Screen name="Detalle" component={DetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+================================================================================
+📄 ARCHIVO: CLAUDE.md
+================================================================================
+@AGENTS.md
+
+
+================================================================================
+📄 ARCHIVO: app.json
+================================================================================
+{
+  "expo": {
+    "name": "AppServicios",
+    "slug": "AppServicios",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
+
+
+================================================================================
+📄 ARCHIVO: index.js
+================================================================================
+import { registerRootComponent } from 'expo';
+
+import App from './App';
+
+// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
+// It also ensures that whether you load the app in Expo Go or in a native build,
+// the environment is set up appropriately
+registerRootComponent(App);
+
+
+================================================================================
+📄 ARCHIVO: package.json
+================================================================================
+{
+  "name": "appservicios",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
+    "@react-navigation/native": "^7.4.1",
+    "@react-navigation/native-stack": "^7.19.1",
+    "expo": "~57.0.23",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "^5.9.1",
+    "react-native-screens": "^4.28.0",
+    "react-native-vector-icons": "^10.3.0",
+    "react-native-web": "^0.21.2"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "private": true
+}
+
+
+================================================================================
+📄 ARCHIVO: proyecto_react.txt
+================================================================================
+
+
+================================================================================
+📄 ARCHIVO: screens\DetailScreen.js
+================================================================================
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
+export default function DetailScreen({ route }) {
+  const { servicio, precio, descripcion } = route.params;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Servicio: {servicio}</Text>
+      <Text style={styles.text}>Precio: {precio}</Text>
+      <Text style={styles.text}>{descripcion}</Text>
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Contratar Servicio</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex:1, padding:20, justifyContent:'center' },
+  title: { fontSize:24, fontWeight:'bold', marginBottom:10 },
+  text: { fontSize:16, marginBottom:10 },
+  button: {
+    backgroundColor: '#2563EB',
+    padding: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 20
+  },
+  buttonText: { color: '#FFF', fontWeight: 'bold' }
+});
+
+================================================================================
+📄 ARCHIVO: screens\HomeScreen.js
+================================================================================
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+export default function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Servicios Plus</Text>
+
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => navigation.navigate('Detalle', {
+          servicio: 'Domicilios',
+          precio: '$5.000',
+          descripcion: 'Entrega rápida y segura en menos de 30 minutos'
+        })}
+      >
+        <Text style={styles.cardTitle}>
+          <Ionicons name="cart" size={20} color="#0EA5E9" /> Domicilio
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => navigation.navigate('Detalle', {
+          servicio: 'Transporte',
+          precio: '$8.000',
+          descripcion: 'Movilidad cómoda y segura por la ciudad'
+        })}
+      >
+        <Text style={styles.cardTitle}>
+          <Ionicons name="car" size={20} color="#0EA5E9" /> Transporte
+        </Text>
+      </TouchableOpacity>
+
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex:1, padding:20, backgroundColor:'#F3F4F6' },
+  header: { fontSize:26, fontWeight:'bold', marginBottom:20 },
+  card: {
+    backgroundColor:'#FFF',
+    padding:20,
+    borderRadius:15,
+    marginBottom:15,
+    elevation:4
+  },
+  cardTitle:{ fontSize:18, fontWeight:'bold' }
+});
